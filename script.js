@@ -1,4 +1,4 @@
-/* Paisa Path – Personal Expense Tracker
+/* Spendora - Personal Expense Tracker – Personal Expense Tracker
    Data is saved in the browser (localStorage). Each user has a separate record,
    so one user can never see another user's expenses. */
 const $ = id => document.getElementById(id);
