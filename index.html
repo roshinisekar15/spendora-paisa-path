@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spendora – Personal Expense Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN / SIGN UP -->
+<section id="auth">
+  <div class="auth-art">
+    <h1>Spendora -expense tracker</h1>
+    <p>Know where every rupee goes.</p>
+    <ul class="perks"><li>Track daily expenses in seconds</li><li>Set budgets with smart alerts</li><li>See clear monthly summaries</li></ul>
+  </div>
+  <form id="authForm" class="auth-card" novalidate>
+    <h2 id="authTitle">Welcome back</h2>
+    <label id="nameRow" hidden>Name<input id="aName" type="text" autocomplete="name"></label>
+    <label>Email<input id="aEmail" type="email" autocomplete="email"></label>
+    <label>Password<input id="aPass" type="password" autocomplete="current-password"></label>
+    <p class="err" id="authErr" role="alert"></p>
+    <button class="btn" id="authBtn" type="submit">Log in</button>
+    <button class="link" id="authSwitch" type="button">New here? Create an account</button>
+  </form>
+</section>
+
+<!-- APP -->
+<div id="app" hidden>
+  <aside class="side">
+    <div class="brand">Paisa Path</div>
+    <nav id="nav">
+      <button data-v="dash" class="on">Dashboard</button>
+      <button data-v="exp">Expenses</button>
+      <button data-v="cat">Categories</button>
+      <button data-v="bud">Budgets</button>
+    </nav>
+    <div class="me"><span id="who"></span><button class="link" id="logout">Log out</button></div>
+  </aside>
+
+  <main>
+    <div id="alerts"></div>
+
+    <!-- Dashboard -->
+    <section id="v-dash" class="view">
+      <header class="head"><h2>Monthly summary</h2><input type="month" id="month"></header>
+      <p class="hint" id="greet"></p>
+      <div class="stats">
+        <div><small>Spent</small><b id="sSpent">₹0</b></div>
+        <div><small>Budget</small><b id="sBudget">₹0</b></div>
+        <div><small>Left</small><b id="sLeft">₹0</b></div>
+      </div>
+      <div class="two">
+        <div class="panel"><h3>Where your money goes</h3><div class="donut-wrap"><div id="donut"><span id="dTotal"></span></div><ul id="legend"></ul></div></div>
+        <div class="panel"><h3>Recent transactions</h3><ul id="recent" class="recent"></ul></div>
+      </div>
+      <div class="panel"><h3>Last 6 months</h3><div id="trend" class="trend"></div></div>
+      <div class="panel"><h3>Spending by category</h3><div id="chart"></div></div>
+      <div class="panel"><h3>Actual vs budget</h3>
+        <div class="scroll"><table id="sumTable"></table></div></div>
+    </section>
+
+    <!-- Expenses -->
+    <section id="v-exp" class="view" hidden>
+      <header class="head"><h2>Expenses</h2></header>
+      <form id="expForm" class="panel grid" novalidate>
+        <input type="hidden" id="eId">
+        <label>Amount (₹)<input id="eAmt" type="number" min="0" step="0.01"></label>
+        <label>Date<input id="eDate" type="date"></label>
+        <label>Category<select id="eCat"></select></label>
+        <label>Payment mode
+          <select id="eMode"><option>Cash</option><option>UPI</option><option>Card</option><option>Net banking</option></select></label>
+        <label class="wide">Description<input id="eDesc" type="text" maxlength="80"></label>
+        <p class="err wide" id="eErr" role="alert"></p>
+        <div class="wide"><button class="btn" id="eBtn" type="submit">Add expense</button>
+          <button class="ghost" id="eCancel" type="button" hidden>Cancel edit</button></div>
+      </form>
+
+      <div class="panel">
+        <div class="row tools"><input id="fQ" type="search" placeholder="Search description..." aria-label="Search"><button class="ghost" id="export" type="button">Export CSV</button></div>
+        <div class="filters">
+          <label>From<input type="date" id="fFrom"></label>
+          <label>To<input type="date" id="fTo"></label>
+          <label>Category<select id="fCat"></select></label>
+          <label>Mode<select id="fMode"><option value="">All</option><option>Cash</option><option>UPI</option><option>Card</option><option>Net banking</option></select></label>
+          <button class="ghost" id="fClear" type="button">Clear filters</button>
+        </div>
+        <div class="scroll"><table id="expTable"></table></div>
+        <div class="pager"><button class="ghost" id="prev">Previous</button><span id="pg"></span><button class="ghost" id="next">Next</button></div>
+      </div>
+    </section>
+
+    <!-- Categories -->
+    <section id="v-cat" class="view" hidden>
+      <header class="head"><h2>Categories</h2></header>
+      <form id="catForm" class="panel row" novalidate>
+        <input id="cName" type="text" placeholder="New category name" maxlength="24">
+        <button class="btn" type="submit">Add category</button>
+      </form>
+      <p class="err" id="cErr" role="alert"></p>
+      <ul id="catList" class="chips"></ul>
+    </section>
+
+    <!-- Budgets -->
+    <section id="v-bud" class="view" hidden>
+      <header class="head"><h2>Budgets</h2><input type="month" id="bMonth"></header>
+      <p class="hint">Set a limit for each category in the chosen month. You get a warning at 80% and an alert above 100%.</p>
+      <div id="budList" class="panel"></div>
+    </section>
+  </main>
+</div>
+
+<div id="toast" role="status"></div>
+<script src="script.js"></script>
+</body>
+</html>
